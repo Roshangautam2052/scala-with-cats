@@ -3,7 +3,7 @@ ThisBuild / organization := "com.example"
 
 lazy val hello = (project in file("."))
   .settings(
-    name := "FP Course"
+    name := "scala-with-cats"
   )
 
 addCompilerPlugin("org.typelevel" %% "kind-projector" % "0.11.3" cross CrossVersion.full)
