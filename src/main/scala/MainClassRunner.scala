@@ -1,6 +1,7 @@
+import typeclasses.exercises.{Equality, Person}
 import typeclasses.implicits.GenericByteEncoder.GenericByteEncoderStringRotator
-import typeclasses.implicits.{GenericByteDecoder, GenericByteEncoder, GenericChannelImpl}
-import typeclasses.{ByteEncoder4, ByteEncoderForCaseClass, ByteEncoderForString, CaseClassChannelImpl, FileChannel, FileChannel2, FileChannel3, FileChannel4, FullName, IntByteEncoder, StringByteEncoder, Switch}
+import typeclasses.implicits.{GenericByteDecoder, GenericChannelImpl}
+import typeclasses.*
 
 object MainClassRunner extends App{
 
@@ -35,12 +36,6 @@ object MainClassRunner extends App{
 
   ByteEncoderForString[String].encoder("hello")
   println(s"******$result **********")
-  // println(s"${ByteEncoderForString.StringEncoder.encoder("Hello").mkString("Array(", ", ", ")")}")
-
-  val randomValue:String =  "123"
-  println(randomValue.substring(0, 0))
-  println(randomValue.substring(1, 2))
-  println(randomValue.substring(1, 3))
 
 
   // Running GenericChannel
@@ -54,4 +49,11 @@ object MainClassRunner extends App{
   val array:Array[Byte] = Array(78, 105)
 
   println(GenericByteDecoder[String].decode(array))
+  val person1 = Person("hello", 1)
+  val person2 = Person("hello", 1)
+
+  // Test
+  println(Equality[Person].checkEquality(person1, person2))
+  println(Equality[Int].checkEquality(11, 12))
+  println(Equality[String].checkEquality("11", "11"))
 }
