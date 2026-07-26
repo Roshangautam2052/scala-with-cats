@@ -5,6 +5,7 @@ import typeclasses.implicits.GenericByteEncoder.GenericByteEncoderStringRotator
 import typeclasses.implicits.{GenericByteDecoder, GenericChannelImpl}
 import typeclasses.*
 import wellKnownTypeClasses.eq.Account
+import wellKnownTypeClasses.order.FinanceAccount
 
 object MainClassRunner extends App{
 
@@ -87,6 +88,25 @@ object MainClassRunner extends App{
   import Account.Instances.bvIdEq
   println(s"Two accounts Equal based universal equality : ${account1 === account2}") //true
 
+
+  // Testing Order for two Finance Accounts
+
+  val financeAccount1 = FinanceAccount(
+    id = 12L,
+    number = "1209787",
+    balance = 67997,
+    owner = "Sarala Gautam")
+
+  val financeAccount2 = FinanceAccount(
+    id = 18L,
+    number = "12097870",
+    balance = 679976,
+    owner = "Aakriti Gautam")
+
+
+  val sortedById = FinanceAccount.sort(List(financeAccount1, financeAccount2))
+
+  println(s"Two finance Account sorted by ID: $sortedById")
 
 
 
