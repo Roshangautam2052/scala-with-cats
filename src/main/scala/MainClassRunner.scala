@@ -1,7 +1,10 @@
 import typeclasses.exercises.{Equality, Person}
+import cats.*
+import cats.implicits.*
 import typeclasses.implicits.GenericByteEncoder.GenericByteEncoderStringRotator
 import typeclasses.implicits.{GenericByteDecoder, GenericChannelImpl}
 import typeclasses.*
+import wellKnownTypeClasses.eq.Account
 
 object MainClassRunner extends App{
 
@@ -56,4 +59,35 @@ object MainClassRunner extends App{
   println(Equality[Person].checkEquality(person1, person2))
   println(Equality[Int].checkEquality(11, 12))
   println(Equality[String].checkEquality("11", "11"))
+
+  // Testing Eq for two accounts
+
+  val account1 = Account(
+    id = 12L,
+    number = "1209787",
+    balance = 67997,
+    owner = "Sarala Gautam")
+  val account2 = Account(
+    id = 12L,
+    number = "12097870",
+    balance = 679976,
+    owner = "Pushpa Gautam")
+
+  // Since we are using universal equality these two accounts are not equal as each fields need to be equal
+  println(s" Two accounts Equal: ${Eq[Account].eqv(account1, account2)}") // false
+
+  // Let's use some other instances by checking the id of the users
+  println(s"Two accounts Equal based on ID: ${Account.Instances.byIdEq2.eqv(account1, account2)}") // true
+
+  // Still we are using universal equality these two accounts are not equal as each fields need to be equal
+  println(s"Two accounts Equal based universal equality : ${account1 === account2}") // false
+
+  // what if we want to use === for the implicit instances of which we have created we have to import the implicit instance
+  // This simple import will now point the === to use the instance we have defined in the implicit scope
+  import Account.Instances.bvIdEq
+  println(s"Two accounts Equal based universal equality : ${account1 === account2}") //true
+
+
+
+
 }
